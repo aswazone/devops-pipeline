@@ -1,0 +1,23 @@
+name: CI Pipeline # Name of the workflow
+
+on: # Which will define the trigger event, what actions in the github should starts the pipeline 
+  push: # Somebody pushes a code into the repo,
+    branches: [ main ] # then only changes in the main branch will trigger the pipeline, if u pushes to other branch then it will not trigger the pipeline
+
+jobs: # Are the group of tasks that will be executed in the pipeline in a sequence.
+  build: # Name of the job
+    runs-on: ubuntu-latest # Where the job will be executed (why ubuntu? beacause it fast and lightweight)
+    steps: # List of tasks that will be executed in the pipeline
+      - name: Checkout code # Name of the task
+        uses: actions/checkout@v5 # Action that will checkout the code from the repository
+
+      - name: Setup Node.js # Name of the task
+        uses: actions/setup-node@v3 # Action that will setup Node.js
+        with:
+          node-version: 16 # Version of Node.js that will be used
+
+      - name: Install dependencies # Name of the task
+        run: npm install # Command that will install dependencies
+      
+      - name: Run tests # Name of the task
+        run: npm test # Command that will run tests
